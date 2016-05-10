@@ -6,9 +6,9 @@ OBJ="NCBI/nt" \
 	"curated/hg19_rRNA_mito_Hsapiens_rna.fa" \
 	"curated/rapsearch_viral_aa_130628_db_v2.12.fasta" \
 	"curated/viruses-5-2012_trimmedgi-MOD_addedgi.fa" \
-	"RiboClean_SNAP/snap_index_18s_rRNA_gene_not_partial/Genome_index" \
-	"RiboClean_SNAP/snap_index_23s/Genome_index" \
-	"RiboClean_SNAP/snap_index_28s_rRNA_gene_NOT_partial_18s_spacer_5.8s/Genome_index" \
+	"RiboClean_SNAP/snap_index_18s_rRNA_gene_not_partial/GenomeIndex" \
+	"RiboClean_SNAP/snap_index_23s/GenomeIndex" \
+	"RiboClean_SNAP/snap_index_28s_rRNA_gene_NOT_partial_18s_spacer_5.8s/GenomeIndex" \
 	"curated/rdp_typed_iso_goodq_9210seqs.fa"
 
 DIRS=COMP_SNAP/ FAST_SNAP/ RAPSearch/ RiboClean_SNAP/ taxonomy/ NCBI/ curated/
