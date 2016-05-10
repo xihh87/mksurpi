@@ -57,7 +57,10 @@ curated/%.fa: curated/%.fa.gz.ok
 
 # check downloaded info
 %.ok:	%	%.md5
-	./check-data $prereq
+	./check-data $prereq || {
+		rm $prereq
+		return 1
+	}
 
 # download info
 curated/%.gz	curated/%.gz.md5:
