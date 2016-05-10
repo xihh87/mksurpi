@@ -22,7 +22,7 @@ all:V: $DIRS $OBJ
 
 
 # taxonomy database
-taxonomy/names_scientificname.db: $TAX_OBJS
+taxonomy/names_scientificname.db	taxonomy/gi_taxid_nucl.db	taxonomy/gi_taxid_prot.db:	$TAX_OBJS
 	sh -c "cd taxonomy; create_taxonomy_db.py"
 
 taxonomy/names_scientificname.dmp:	NCBI/taxdump.tar.gz.ok
@@ -56,25 +56,25 @@ curated/%.fa: curated/%.fa.gz.ok
 	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 # check downloaded info
-%.ok:	%
+%.ok:	%	%.md5
 	./check-data $prereq
 
 # download info
-curated/%.gz:
-	curl -o $target.md5 -s -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.md5
-	curl -o $target -s -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem || true
+curated/%.gz	curated/%.gz.md5:
+	curl -o $target.md5 -s -S -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.gz.md5 || true
+	curl -o $target -s -S -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.gz || true
 
-NCBI/n%.gz:
-	curl -o $target.md5 -s -L -C - ftp://ftp.ncbi.nih.gov/blast/db/FASTA/n$stem.gz.md5
-	curl -o $target -s -L -C - ftp://ftp.ncbi.nih.gov/blast/db/FASTA/n$stem.gz || true
+NCBI/n%.gz	NCBI/n%.gz.md5:
+	curl -o $target.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/n$stem.gz.md5 || true
+	curl -o $target -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/n$stem.gz || true
 
-NCBI/%.dmp.gz:
-	curl -o $target.md5 -s -L -C - ftp://ftp.ncbi.nih.gov/pub/taxonomy/$stem.gz.md5
-	curl -o $target -s -L -C - ftp://ftp.ncbi.nih.gov/pub/taxonomy/$stem.gz || true
+NCBI/%.dmp.gz	NCBI/%.dmp.gz.md5:
+	curl -o $target.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.dmp.gz.md5 || true
+	curl -o $target -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.dmp.gz || true
 
-NCBI/%.tar.gz:
-	curl -o $target.md5 -s -L -C - ftp://ftp.ncbi.nih.gov/pub/taxonomy/$stem.gz.md5
-	curl -o $target -s -L -C - ftp://ftp.ncbi.nih.gov/pub/taxonomy/$stem.gz || true
+NCBI/%.tar.gz	NCBI/%.tar.gz.md5:
+	curl -o $target.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.tar.gz.md5 || true
+	curl -o $target -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.tar.gz || true
 
 # make dirs
 %/:
