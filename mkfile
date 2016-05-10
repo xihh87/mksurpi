@@ -11,41 +11,55 @@ OBJ="NCBI/nt" \
 	"RiboClean_SNAP/snap_index_28s_rRNA_gene_NOT_partial_18s_spacer_5.8s/GenomeIndex" \
 	"curated/rdp_typed_iso_goodq_9210seqs.fa"
 
+TAX_OBJS=taxonomy/nodes.dmp \
+	taxonomy/names_scientificname.dmp \
+	taxonomy/gi_taxid_prot.dmp \
+	taxonomy/gi_taxid_nucl.dmp
+
 DIRS=COMP_SNAP/ FAST_SNAP/ RAPSearch/ RiboClean_SNAP/ taxonomy/ NCBI/ curated/
 
 all:V: $DIRS $OBJ
 
-%/:
-	mkdir -p $stem
 
-FAST_SNAP/snap_index_%/Genome_index: curated/%.fa
-	snap-aligner index $prereq `dirname $target`
-
-RiboClean_SNAP/snap_index_%/Genome_index: curated/%.fa
-	snap-aligner index $prereq `dirname $target`
-
-NCBI/nr: NCBI/nr.gz
-	pigz -dc -k $prereq > $target
-
-NCBI/nt: NCBI/nt.gz
-	pigz -dc -k $prereq > $target
-
-taxonomy/names_scientificname.db:	NCBI/taxdump.tar.gz	taxonomy/gi_taxid_prot.dmp	taxonomy/gi_taxid_nucl.dmp
-	bsdtar -x --to-stdout -f NCBI/taxdump.tar.gz names.dmp | grep "scientific name" > taxonomy/names_scientificname.dmp
+# taxonomy database
+taxonomy/names_scientificname.db: $TAX_OBJS
 	sh -c "cd taxonomy; create_taxonomy_db.py"
 
-taxonomy/%.dmp:	NCBI/%.dmp.gz
-	pigz -dc -k $prereq > $target
+taxonomy/names_scientificname.dmp:	NCBI/taxdump.tar.gz.ok
+	bsdtar -x --to-stdout -f `echo $prereq | sed -e 's#.ok##'` names.dmp \
+	| grep "scientific name" > $target
+
+taxonomy/nodes.dmp:	NCBI/taxdump.tar.gz.ok
+	bsdtar -x --to-stdout -f `echo $prereq | sed -e 's#.ok##'` nodes.dmp > $target
+
+taxonomy/gi_%.dmp:	NCBI/gi_%.dmp.gz.ok
+	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+
+# snap indexes
+FAST_SNAP/snap_index_%/GenomeIndex: curated/%.fa
+	snap-aligner index $prereq `dirname $target`
+
+RiboClean_SNAP/snap_index_%/GenomeIndex: curated/%.fa
+	snap-aligner index $prereq `dirname $target`
+
+# uncompress genetic data
+NCBI/nr: NCBI/nr.gz.ok
+	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+
+NCBI/nt: NCBI/nt.gz.ok
+	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 curated/%.fasta: curated/%.fasta.gz.ok
-	pigz -dc -k curated/$stem.fasta.gz > $target
+	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 curated/%.fa: curated/%.fa.gz.ok
-	pigz -dc -k curated/$stem.fa.gz > $target
+	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
 
+# check downloaded info
 %.ok:	%
 	./check-data $prereq
 
+# download info
 curated/%.gz:
 	curl -o $target.md5 -s -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.md5
 	curl -o $target -s -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem || true
@@ -61,6 +75,10 @@ NCBI/%.dmp.gz:
 NCBI/%.tar.gz:
 	curl -o $target.md5 -s -L -C - ftp://ftp.ncbi.nih.gov/pub/taxonomy/$stem.gz.md5
 	curl -o $target -s -L -C - ftp://ftp.ncbi.nih.gov/pub/taxonomy/$stem.gz || true
+
+# make dirs
+%/:
+	mkdir -p $stem
 
 clean:
 	rm -r $DIRS
