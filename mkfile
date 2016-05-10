@@ -61,20 +61,20 @@ curated/%.fa: curated/%.fa.gz.ok
 
 # download info
 curated/%.gz	curated/%.gz.md5:
-	curl -o $target.md5 -s -S -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.gz.md5 || true
-	curl -o $target -s -S -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.gz || true
+	curl -o curated/$stem.gz.md5 -s -S -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.gz.md5 || true
+	curl -o curated/$stem.gz -s -S -L -C - http://chiulab.ucsf.edu/SURPI/databases/$stem.gz || true
 
 NCBI/n%.gz	NCBI/n%.gz.md5:
-	curl -o $target.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/n$stem.gz.md5 || true
-	curl -o $target -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/n$stem.gz || true
+	curl -o NCBI/n$stem.gz.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/n$stem.gz.md5 || true
+	curl -o NCBI/n$stem.gz -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/n$stem.gz || true
 
 NCBI/%.dmp.gz	NCBI/%.dmp.gz.md5:
-	curl -o $target.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.dmp.gz.md5 || true
-	curl -o $target -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.dmp.gz || true
+	curl -o NCBI/$stem.dmp.gz.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.dmp.gz.md5 || true
+	curl -o NCBI/$stem.dmp.gz -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.dmp.gz || true
 
 NCBI/%.tar.gz	NCBI/%.tar.gz.md5:
-	curl -o $target.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.tar.gz.md5 || true
-	curl -o $target -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.tar.gz || true
+	curl -o NCBI/$stem.tar.gz.md5 -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.tar.gz.md5 || true
+	curl -o NCBI/$stem.tar.gz -s -S -L -C - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/$stem.tar.gz || true
 
 # make dirs
 %/:
