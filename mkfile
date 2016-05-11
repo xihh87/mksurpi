@@ -1,14 +1,14 @@
 NPROC=12
-OBJ="NCBI/nt" \
-	"NCBI/nr" \
-	"curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa" \
+OBJ=	"curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa" \
 	"curated/hg19_rRNA_mito_Hsapiens_rna.fa" \
 	"curated/rapsearch_viral_aa_130628_db_v2.12.fasta" \
+	"curated/rdp_typed_iso_goodq_9210seqs.fa" \
 	"curated/viruses-5-2012_trimmedgi-MOD_addedgi.fa" \
+	"NCBI/nt" \
+	"RAPSearch/rapsearch_nr_db_v2.23" \
 	"RiboClean_SNAP/snap_index_18s_rRNA_gene_not_partial/GenomeIndex" \
 	"RiboClean_SNAP/snap_index_23s/GenomeIndex" \
 	"RiboClean_SNAP/snap_index_28s_rRNA_gene_NOT_partial_18s_spacer_5.8s/GenomeIndex" \
-	"curated/rdp_typed_iso_goodq_9210seqs.fa"
 	"taxonomy/names_nodes_scientific.db"
 
 TAX_OBJS=taxonomy/nodes.dmp \
@@ -40,6 +40,10 @@ FAST_SNAP/snap_index_%/GenomeIndex: curated/%.fa
 
 RiboClean_SNAP/snap_index_%/GenomeIndex: curated/%.fa
 	snap-aligner index $prereq `dirname $target`
+
+# rapsearch
+RAPSearch/rapsearch_nr_db_v2.23:	NCBI/nr
+	prerapsearch -d $prereq	-n $target
 
 # uncompress genetic data
 NCBI/nr: NCBI/nr.gz.ok
