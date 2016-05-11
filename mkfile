@@ -1,7 +1,6 @@
 NPROC=12
 OBJ="NCBI/nt" \
 	"NCBI/nr" \
-	"taxonomy/names_scientificname.db" \
 	"curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa" \
 	"curated/hg19_rRNA_mito_Hsapiens_rna.fa" \
 	"curated/rapsearch_viral_aa_130628_db_v2.12.fasta" \
@@ -10,6 +9,7 @@ OBJ="NCBI/nt" \
 	"RiboClean_SNAP/snap_index_23s/GenomeIndex" \
 	"RiboClean_SNAP/snap_index_28s_rRNA_gene_NOT_partial_18s_spacer_5.8s/GenomeIndex" \
 	"curated/rdp_typed_iso_goodq_9210seqs.fa"
+	"taxonomy/names_nodes_scientific.db"
 
 TAX_OBJS=taxonomy/nodes.dmp \
 	taxonomy/names_scientificname.dmp \
@@ -20,9 +20,8 @@ DIRS=COMP_SNAP/ FAST_SNAP/ RAPSearch/ RiboClean_SNAP/ taxonomy/ NCBI/ curated/
 
 all:V: $DIRS $OBJ
 
-
 # taxonomy database
-taxonomy/names_scientificname.db	taxonomy/gi_taxid_nucl.db	taxonomy/gi_taxid_prot.db:	$TAX_OBJS
+taxonomy/names_nodes_scientific.db	taxonomy/gi_taxid_nucl.db	taxonomy/gi_taxid_prot.db:	$TAX_OBJS
 	sh -c "cd taxonomy; create_taxonomy_db.py"
 
 taxonomy/names_scientificname.dmp:	NCBI/taxdump.tar.gz.ok
