@@ -29,14 +29,14 @@ taxonomy/names_scientificname.dmp:	NCBI/taxdump.tar.gz.ok
 	| grep "scientific name" > $target
 
 taxonomy/nodes.dmp:	NCBI/taxdump.tar.gz.ok
-	bsdtar -x --to-stdout -f `echo $prereq | sed -e 's#.ok##'` nodes.dmp > $target
+	bsdtar -xOf `echo $prereq | sed -e 's#.ok##'` nodes.dmp > $target
 
 taxonomy/gi_%.dmp:	NCBI/gi_%.dmp.gz.ok
-	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 # snap indexes
 FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq/GenomeIndex:	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa
-	snap-aligner index -s 16 $prereq `dirname $target`
+	snap-aligner index $prereq `dirname $target`
 
 FAST_SNAP/snap_index_%/GenomeIndex: curated/%.fa
 	snap-aligner index $prereq `dirname $target`
@@ -56,16 +56,16 @@ RAPSearch/rapsearch_viral_aa_130628_db_v2.12:	curated/rapsearch_viral_aa_130628_
 
 # uncompress genetic data
 NCBI/nr: NCBI/nr.gz.ok
-	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 NCBI/nt: NCBI/nt.gz.ok
-	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 curated/%.fasta: curated/%.fasta.gz.ok
-	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 curated/%.fa: curated/%.fa.gz.ok
-	pigz -dc -k `echo $prereq | sed -e 's#.ok##'` > $target
+	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 # check downloaded info
 %.ok:	%	%.md5
