@@ -53,7 +53,7 @@ RiboClean_SNAP/snap_index_%/GenomeIndex:	curated/%.fa
 	snap-aligner index $prereq `dirname $target`
 
 snap_index_hg19_rRNA_mito_Hsapiens_rna:	curated/hg19_rRNA_mito_Hsapiens_rna.fa
-	snap index -hg19 $prereq $target
+	snap-aligner index $prereq $target -hg19 -s 21
 
 # rapsearch
 RAPSearch/rapsearch_nr_db_v2.23:	NCBI/nr
