@@ -1,8 +1,27 @@
-NPROC=12
+NPROC=5
 OBJ=	"FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.1/GenomeIndex" \
 	"FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.2/GenomeIndex" \
 	"FAST_SNAP/snap_index_viruses-5-2012_trimmedgi-MOD_addedgi/GenomeIndex" \
-	"NCBI/nt" \
+	"COMP_SNAP/nt.1/GenomeIndex" \
+	"COMP_SNAP/nt.2/GenomeIndex" \
+	"COMP_SNAP/nt.3/GenomeIndex" \
+	"COMP_SNAP/nt.4/GenomeIndex" \
+	"COMP_SNAP/nt.5/GenomeIndex" \
+	"COMP_SNAP/nt.6/GenomeIndex" \
+	"COMP_SNAP/nt.7/GenomeIndex" \
+	"COMP_SNAP/nt.8/GenomeIndex" \
+	"COMP_SNAP/nt.9/GenomeIndex" \
+	"COMP_SNAP/nt.10/GenomeIndex" \
+	"COMP_SNAP/nt.11/GenomeIndex" \
+	"COMP_SNAP/nt.12/GenomeIndex" \
+	"COMP_SNAP/nt.13/GenomeIndex" \
+	"COMP_SNAP/nt.14/GenomeIndex" \
+	"COMP_SNAP/nt.15/GenomeIndex" \
+	"COMP_SNAP/nt.16/GenomeIndex" \
+	"COMP_SNAP/nt.17/GenomeIndex" \
+	"COMP_SNAP/nt.18/GenomeIndex" \
+	"COMP_SNAP/nt.19/GenomeIndex" \
+	"COMP_SNAP/nt.20/GenomeIndex" \
 	"RAPSearch/rapsearch_nr_db_v2.23" \
 	"RAPSearch/rapsearch_viral_aa_130628_db_v2.12" \
 	"RiboClean_SNAP/snap_index_rdp_typed_iso_goodq_9210seqs/GenomeIndex" \
@@ -36,6 +55,8 @@ taxonomy/gi_%.dmp:	NCBI/gi_%.dmp.gz.ok
 	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 # snap indexes
+COMP_SNAP/%/GenomeIndex:	NCBI/%
+	snap-aligner index $prereq `dirname $target`
 
 FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.1/GenomeIndex:	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.1
 	snap-aligner index $prereq `dirname $target`
@@ -45,6 +66,9 @@ FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.2/GenomeIn
 
 curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.1	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.2: curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa
 	gt splitfasta -numfiles 2 $prereq
+
+NCBI/nt\.([0-9]+):R:	NCBI/nt
+	gt splitfasta -numfiles 20 $prereq
 
 FAST_SNAP/snap_index_%/GenomeIndex: curated/%.fa
 	snap-aligner index $prereq `dirname $target`
