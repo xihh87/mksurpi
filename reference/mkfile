@@ -2,13 +2,13 @@ NT=`{for i in `seq 1 58`; do echo "COMP_SNAP/nt.${i}/GenomeIndex"; done}
 OBJ=	"FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.1/GenomeIndex" \
 	"FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.2/GenomeIndex" \
 	"FAST_SNAP/snap_index_viruses-5-2012_trimmedgi-MOD_addedgi/GenomeIndex" \
-	"RAPSearch/rapsearch_nr_db_v2.23" \
-	"RAPSearch/rapsearch_viral_aa_130628_db_v2.12" \
-	"RiboClean_SNAP/snap_index_rdp_typed_iso_goodq_9210seqs/GenomeIndex" \
+	"hg19/snap_index_hg19_rRNA_mito_Hsapiens_rna" \
+	"RAPSearch/rapsearch_nr_db" \
+	"RAPSearch/rapsearch_viral_db" \
 	"RiboClean_SNAP/snap_index_18s_rRNA_gene_not_partial/GenomeIndex" \
 	"RiboClean_SNAP/snap_index_23s/GenomeIndex" \
 	"RiboClean_SNAP/snap_index_28s_rRNA_gene_NOT_partial_18s_spacer_5.8s/GenomeIndex" \
-	"snap_index_hg19_rRNA_mito_Hsapiens_rna" \
+	"RiboClean_SNAP/snap_index_rdp_typed_iso_goodq_9210seqs/GenomeIndex" \
 	"taxonomy/names_nodes_scientific.db"
 
 TAX_OBJS=taxonomy/nodes.dmp \
@@ -56,14 +56,14 @@ FAST_SNAP/snap_index_%/GenomeIndex: curated/%.fa
 RiboClean_SNAP/snap_index_%/GenomeIndex:	curated/%.fa
 	snap-aligner index $prereq `dirname $target`
 
-snap_index_hg19_rRNA_mito_Hsapiens_rna:	curated/hg19_rRNA_mito_Hsapiens_rna.fa
+hg19/snap_index_hg19_rRNA_mito_Hsapiens_rna:	curated/hg19_rRNA_mito_Hsapiens_rna.fa
 	snap-aligner index $prereq $target -hg19 -s 21
 
 # rapsearch
-RAPSearch/rapsearch_nr_db_v2.23:	NCBI/nr
+RAPSearch/rapsearch_nr_db:	NCBI/nr
 	prerapsearch -d $prereq	-n $target
 
-RAPSearch/rapsearch_viral_aa_130628_db_v2.12:	curated/rapsearch_viral_aa_130628_db_v2.12.fasta
+RAPSearch/rapsearch_viral_db:	curated/rapsearch_viral_aa_130628_db_v2.12.fasta
 	prerapsearch -d $prereq	-n $target
 
 # uncompress genetic data
