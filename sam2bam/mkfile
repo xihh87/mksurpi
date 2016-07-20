@@ -1,0 +1,15 @@
+SAM2BAM_TARGETS=`{find -L ../data/ -name '*.sam' \
+	| sed -e 's#\.\./data/#../results/./#g' \
+		-e 's#\.sam#.bam#g' \
+}
+
+sam2bam:V: $SAM2BAM_TARGETS
+
+../results/%.bam:		../data/%.sam
+	mkdir -p `dirname $target`
+	samtools  view \
+		-h \
+		-b \
+		-S \
+		$prereq \
+		-o $target
