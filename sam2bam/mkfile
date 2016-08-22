@@ -5,10 +5,13 @@ SAM2BAM_TARGETS=`{find -L ../data/ -name '*.sam' \
 
 sam2bam:V: $SAM2BAM_TARGETS
 
+clean:V:
+	rm $SAM2BAM_TARGETS || true
+
+
 ../results/%.bam:		../data/%.sam
 	mkdir -p `dirname $target`
 	samtools  view \
-		-h \
 		-b \
 		-S \
 		$prereq \

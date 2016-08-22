@@ -1,5 +1,5 @@
-MERGE_SORT_TARGETS=`{find -L data/ -name '*_nt.*.sam' \
-	| sed -e 's#data/#results/./#g' \
+MERGE_SORT_TARGETS=`{find -L ../data/ -name '*_nt.*.sam' \
+	| sed -e 's#\.\./data/#../results/./#g' \
 		-e 's#_nt\..*\.sam#.merged_sorted.sam#g' \
 	| sort -u \
 }
@@ -8,7 +8,7 @@ MERGE_SORT_TARGETS=`{find -L data/ -name '*_nt.*.sam' \
 merge_sort_sams:V:	$MERGE_SORT_TARGETS
 
 
-'results/(.*/)?(.*)\.merged\.bam':RD:		'results/\1'
+'../results/(.*/)?(.*)\.merged\.bam':RD:		'../results/\1'
 	mkdir -p `dirname $target`
 	FILES_TO_MERGE="`find $prereq -name $stem2'_nt.*.bam'`"
 	samtools merge \
@@ -17,7 +17,7 @@ merge_sort_sams:V:	$MERGE_SORT_TARGETS
 		$target \
 		$FILES_TO_MERGE
 
-results/%.merged_sorted.sam:	results/%.merged.bam
+../results/%.merged_sorted.sam:	../results/%.merged.bam
 	mkdir -p `dirname $target`
 	samtools sort \
 		-n \
