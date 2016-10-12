@@ -22,7 +22,7 @@ all:V:  NCBI/ curated/ $DIRS $OBJ $NT
 
 # taxonomy database
 taxonomy/names_nodes_scientific.db	taxonomy/gi_taxid_nucl.db	taxonomy/gi_taxid_prot.db:	$TAX_OBJS
-	sh -c "cd taxonomy; create_taxonomy_db.py"
+	sh -c "cd taxonomy; ./create_taxonomy_db.py"
 
 taxonomy/names_scientificname.dmp:	NCBI/taxdump.tar.gz.ok
 	bsdtar -x --to-stdout -f `echo $prereq | sed -e 's#.ok##'` names.dmp \
