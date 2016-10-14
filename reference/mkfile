@@ -36,12 +36,15 @@ taxonomy/gi_%.dmp:	NCBI/gi_%.dmp.gz.ok
 
 # snap indexes
 COMP_SNAP/%/GenomeIndex:	NCBI/%
+	mkdir -p `dirname $target`
 	snap-aligner index $prereq `dirname $target` -exact
 
 FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.1/GenomeIndex:	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.1
+	mkdir -p `dirname $target`
 	snap-aligner index $prereq `dirname $target` -exact
 
 FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.2/GenomeIndex:	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.2
+	mkdir -p `dirname $target`
 	snap-aligner index $prereq `dirname $target` -exact
 
 curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.1	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.2: curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa
@@ -51,12 +54,15 @@ curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.1	curated/Bacterial_
 	gt splitfasta --targetsize 4096 $prereq
 
 FAST_SNAP/snap_index_%/GenomeIndex: curated/%.fa
+	mkdir -p `dirname $target`
 	snap-aligner index $prereq `dirname $target` -exact
 
 RiboClean_SNAP/snap_index_%/GenomeIndex:	curated/%.fa
+	mkdir -p `dirname $target`
 	snap-aligner index $prereq `dirname $target` -exact
 
 hg19/snap_index_hg19_rRNA_mito_Hsapiens_rna:	curated/hg19_rRNA_mito_Hsapiens_rna.fa
+	mkdir -p `dirname $target`
 	snap-aligner index $prereq $target -hg19 -s 21
 
 # rapsearch
