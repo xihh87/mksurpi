@@ -49,9 +49,6 @@ FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq/GenomeInde
 		-locationSize 5 \
 		-exact
 
-curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.1	curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa.2: curated/Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq.fa
-	gt splitfasta -numfiles 2 $prereq
-
 'NCBI/nt\.([0-9]+)':R:	'NCBI/nt'
 	gt splitfasta --targetsize 4096 $prereq
 
