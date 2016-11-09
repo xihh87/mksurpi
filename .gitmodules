@@ -1,0 +1,3 @@
+[submodule "pipeline/000-surpi-barcode"]
+	path = pipeline/000-surpi-barcode
+	url = https://github.com/xihh87/surpi-barcode
