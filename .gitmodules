@@ -1,3 +1,20 @@
 [submodule "pipeline/000-surpi-barcode"]
 	path = pipeline/000-surpi-barcode
 	url = https://github.com/xihh87/surpi-barcode
+[submodule "pipeline/001-trimmomatic"]
+	path = pipeline/001-trimmomatic
+	url = https://github.com/xihh87/mk-trimmomatic
+	branch = filter-out-low-quality
+[submodule "pipeline/002-prinseq"]
+	path = pipeline/002-prinseq
+	url = https://github.com/xihh87/surpi-preprocess
+[submodule "pipeline/002-prinseq/"]
+	branch = barcodes
+[submodule "pipeline/003-filter-human-out"]
+	path = pipeline/003-filter-human-out
+	url = https://github.com/xihh87/snap-align
+	branch = filter-human-out
+[submodule "pipeline/004-fast-mode"]
+	path = pipeline/004-fast-mode
+	url = https://github.com/xihh87/snap-align
+	branch = align-fast-reference
