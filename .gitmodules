@@ -18,3 +18,6 @@
 	path = pipeline/004-fast-mode
 	url = https://github.com/xihh87/snap-align
 	branch = align-fast-reference
+[submodule "pipeline/005-merge-sort-sams"]
+	path = pipeline/005-merge-sort-sams
+	url = https://github.com/xihh87/mk-merge-sams.git
