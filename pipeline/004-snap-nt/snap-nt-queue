@@ -1,0 +1,26 @@
+#!/bin/bash
+# This script outputs the targets needed for nt alignment
+
+snap_dirs() {
+	find -L data/ \
+		-name '*.fastq' \
+		-o -name '*.fastq.gz' \
+		-o -name '*.sam' \
+		-o -name '*.bam' \
+		| xargs -l dirname \
+		| sort -u \
+		| awk '{print "N\t" $0}'
+}
+
+snap_refs() {
+	find -L $SNAP_REFERENCEDIR/ \
+		-maxdepth 1 \
+		-mindepth 1 \
+		-type d \
+		| xargs -l basename \
+		| awk '{print "N\t" $0}'
+}
+
+join <(snap_dirs) <(snap_refs) \
+| awk '{print $2 "_" $3 ".sam" }' \
+| sed -e 's#data/#results/align-nt/#g'
