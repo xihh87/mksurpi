@@ -1,5 +1,0 @@
-#!/bin/sh
-find -L data/ \
-	-name '*.sam' \
-| sed -r \
-	-e 's#^data/#results/annotate/#g'
