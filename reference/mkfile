@@ -2,6 +2,7 @@ NT=`{for i in `seq 1 32`; do echo "COMP_SNAP/nt.${i}/GenomeIndex"; done}
 OBJ=	"FAST_SNAP/snap_index_Bacterial_Refseq_05172012.CLEAN.LenFiltered.uniq/GenomeIndex" \
 	"FAST_SNAP/snap_index_viruses-5-2012_trimmedgi-MOD_addedgi/GenomeIndex" \
 	"hg19/snap_index_hg19_rRNA_mito_Hsapiens_rna" \
+	"NCBI/nt.fai" \
 	"RAPSearch/rapsearch_nr_db" \
 	"RAPSearch/rapsearch_viral_db" \
 	"RiboClean_SNAP/snap_index_18s_rRNA_gene_not_partial/GenomeIndex" \
@@ -76,7 +77,12 @@ NCBI/nr: NCBI/nr.gz.ok
 	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
 NCBI/nt: NCBI/nt.gz.ok
-	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
+	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` \
+	| sed -r -e '/^>.*$/s/ /_/g' \
+	> $target
+
+NCBI/nt.fai:	NCBI/nt
+	samtools faidx $prereq
 
 curated/%.fasta: curated/%.fasta.gz.ok
 	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
