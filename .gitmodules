@@ -36,3 +36,6 @@
 [submodule "pipeline/005b-sort-nt"]
 	path = pipeline/005b-sort-nt
 	url = https://github.com/xihh87/mk-sam2bam.git
+[submodule "pipeline/008a-surpi-report"]
+	path = pipeline/008a-surpi-report
+	url = https://github.com/xihh87/mksurpi-report.git
