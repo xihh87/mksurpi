@@ -27,3 +27,6 @@
 [submodule "pipeline/004-paired-align-nt"]
 	path = pipeline/004b-comp-mode-align-nt
 	url = https://github.com/xihh87/mk-snap-align.git
+[submodule "pipeline/mksurpi-merge-nt"]
+	path = pipeline/005b-merge-nt
+	url = https://github.com/xihh87/mksurpi-merge-nt.git
