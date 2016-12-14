@@ -84,6 +84,14 @@ NCBI/nt: NCBI/nt.gz.ok
 NCBI/nt.fai:	NCBI/nt
 	samtools faidx $prereq
 
+NCBI/nt.sequences:	NCBI/nt.fai
+	awk 'BEGIN {FS="\t"}
+	{print "@SQ\tSN:" $1 "\tLN:" $2}' \
+	"$prereq" \
+	| sort -V -u \
+	> "$target"'.build' \
+	&& mv "$target"'.build' "$target"
+
 curated/%.fasta: curated/%.fasta.gz.ok
 	gzip -d -c -k `echo $prereq | sed -e 's#.ok##'` > $target
 
