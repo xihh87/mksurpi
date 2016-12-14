@@ -22,14 +22,17 @@
 	path = pipeline/005-merge-sort-sams
 	url = https://github.com/xihh87/mk-merge-sams.git
 [submodule "pipeline/007-surpi-annotate"]
-	path = pipeline/007-surpi-annotate
+	path = pipeline/007a-surpi-annotate
 	url = https://github.com/xihh87/mk-surpi-annotate.git
 [submodule "pipeline/004-paired-align-nt"]
 	path = pipeline/004b-comp-mode-align-nt
 	url = https://github.com/xihh87/mk-snap-align.git
 [submodule "pipeline/mksurpi-merge-nt"]
-	path = pipeline/005b-merge-nt
+	path = pipeline/006b-merge-nt
 	url = https://github.com/xihh87/mksurpi-merge-nt.git
-[submodule "pipeline/006b-sort"]
-	path = pipeline/006b-sort
+[submodule "pipeline/007b-sort-merged"]
+	path = pipeline/007b-sort-merged/
 	url = https://github.com/xihh87/mk-sambamba-sort.git
+[submodule "pipeline/005b-sort-nt"]
+	path = pipeline/005b-sort-nt
+	url = https://github.com/xihh87/mk-sam2bam.git
