@@ -15,7 +15,7 @@
 	url = https://github.com/xihh87/snap-align
 	branch = filter-human-out
 [submodule "pipeline/004-fast-mode"]
-	path = pipeline/004-fast-mode
+	path = pipeline/004a-fast-mode
 	url = https://github.com/xihh87/snap-align
 	branch = align-fast-reference
 [submodule "pipeline/005-merge-sort-sams"]
@@ -24,3 +24,6 @@
 [submodule "pipeline/007-surpi-annotate"]
 	path = pipeline/007-surpi-annotate
 	url = https://github.com/xihh87/mk-surpi-annotate.git
+[submodule "pipeline/004-paired-align-nt"]
+	path = pipeline/004b-comp-mode-align-nt
+	url = https://github.com/xihh87/mk-snap-align.git
