@@ -18,3 +18,5 @@ nt
 nt.*
 *_db
 *_db.info
+reference
+.gitignore
