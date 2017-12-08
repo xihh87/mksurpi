@@ -1,0 +1,52 @@
+# join surpi pipeline
+001-trimmomatic:V:
+	cd $target
+	bin/targets | xargs mk
+
+002-prinseq:V:	001-trimmomatic
+	cd $target
+	bin/targets | xargs mk
+
+003-filter-human-out:V:	002-prinseq
+	cd $target
+	bin/targets | xargs mk
+
+004a-fast-mode:V:	003-filter-human-out
+	cd $target
+	bin/targets | xargs mk
+
+004b-comp-mode-align-nt:V:
+	cd $target
+	bin/targets | xargs mk
+
+005b-sort-nt:V:	004b-comp-mode-align-nt
+	cd $target
+	bin/targets | xargs mk
+
+006-sorted:V:	004a-fast-mode
+	cd $target
+	bin/targets | xargs mk
+
+006b-merge-nt:V:	005b-sort-nt
+	cd $target
+	bin/targets | xargs mk
+
+007a-surpi-annotate:V:	006b-merge-nt
+	cd $target
+	bin/targets | xargs mk
+
+007b-sort-merged:V:	007a-surpi-annotate
+	cd $target
+	bin/targets | xargs mk
+
+008a-surpi-report:V:	007b-sort-merged
+	cd $target
+	bin/targets | xargs mk
+
+mk-surpi-choose-read:V:	008a-surpi-report
+	cd $target
+	bin/targets | xargs mk
+
+009a-phylogenetic-tree:V:	mk-surpi-choose-read
+	cd $target
+	bin/targets | xargs mk

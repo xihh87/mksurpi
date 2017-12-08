@@ -1,17 +1,5 @@
 Workflow consist in:
 
-# 000 - barcode
-
-Join the four lane files for illumina output
-into just one forward and one reverse file.
-
-Prepend the sample name on each line,
-so that files can be merged in just one
-without losing information.
-
-**NOTE**: this feature may be replaced by some `readgroups` module,
-that has this same functionality but uses true BAM features.
-
 # 001 - trimmomatic
 
 Remove adapter sequences, and then:
